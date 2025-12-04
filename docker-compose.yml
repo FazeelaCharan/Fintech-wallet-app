@@ -1,0 +1,22 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  db:
+    image: postgres:14-alpine # Using a light version of PostgreSQL
+    restart: always
+    environment:
+      POSTGRES_USER: wallet_user
+      POSTGRES_PASSWORD: supersecurepassword # IMPORTANT: Use a complex password!
+      POSTGRES_DB: wallet_db
+    ports:
+      - "5432:5432" # Maps the database port to your computer
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Saves the data so it doesn't disappear
+  redis:
+    image: redis:7-alpine # Cache for sessions/rate limits
+    restart: always
+    ports:
+      - "6379:6379" # Maps the cache port to your computer
+
+volumes:
+  pgdata: # This volume is where Postgres stores the actual files
