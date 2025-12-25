@@ -3,13 +3,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { User } from './entities/user.entity';
+// 1. We import the WalletModule here
+import { WalletModule } from '../wallet/wallet.module'; 
 
 @Module({
-  // This imports the User table into this module's scope
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    // 2. We add WalletModule to the imports list
+    WalletModule, 
+  ],
   controllers: [UserController],
   providers: [UserService],
-  // We export it so other modules (like Auth) can use it later
   exports: [UserService],
 })
 export class UserModule {}
